@@ -1,13 +1,55 @@
-﻿<Page
-    x:Class="AdaptiveLayoutAnimation.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:AdaptiveLayoutAnimation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+﻿<Page x:Class="AdaptiveLayoutAnimation.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:AdaptiveLayoutAnimation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="Root">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <!--When window width is >=720 effective pixels, move the 2nd row to the 2nd column-->
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
 
+                    <VisualState.Setters>
+                        <Setter Target="Root.RowDefinitions[1].Height" Value="0" />
+                        <Setter Target="Root.ColumnDefinitions[1].Width" Value="*" />
+                        <Setter Target="RightGrid.(Grid.Row)" Value="0" />
+                        <Setter Target="RightGrid.(Grid.Column)" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0" />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="LeftGrid">
+            <TextBlock x:Name="LeftText" 
+                       Text="Left content"
+                       FontSize="48"
+                       FontWeight="Black"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="RightGrid"
+              Grid.Row="1">
+            <TextBlock x:Name="RightText" 
+                       Text="Right content"
+                       FontSize="48"
+                       FontWeight="Black"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Grid>
     </Grid>
 </Page>
