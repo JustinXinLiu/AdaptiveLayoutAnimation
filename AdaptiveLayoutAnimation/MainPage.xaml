@@ -6,50 +6,135 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
 
-    <Grid x:Name="Root">
+    <Grid x:Name="Root"
+          Background="LightSkyBlue"
+          Padding="12">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState>
+                <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
-                        <!--When window width is >=720 effective pixels, move the 2nd row to the 2nd column-->
+                        <!--When window width is >=1200 effective pixels-->
+                        <AdaptiveTrigger MinWindowWidth="1200" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="LeftGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="MiddleGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="RightGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="Root.RowDefinitions[1].Height"
+                                Value="0" />
+                        <Setter Target="Root.ColumnDefinitions[1].Width"
+                                Value="*" />
+                        <Setter Target="Root.ColumnDefinitions[2].Width"
+                                Value="*" />
+                        <Setter Target="MiddleGrid.(Grid.Row)"
+                                Value="0" />
+                        <Setter Target="MiddleGrid.(Grid.Column)"
+                                Value="1" />
+                        <Setter Target="RightGrid.(Grid.Row)"
+                                Value="0" />
+                        <Setter Target="RightGrid.(Grid.Column)"
+                                Value="2" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NormalState">
+                    <VisualState.StateTriggers>
+                        <!--When window width is >=720 effective pixels-->
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="Root.RowDefinitions[1].Height" Value="0" />
-                        <Setter Target="Root.ColumnDefinitions[1].Width" Value="*" />
-                        <Setter Target="RightGrid.(Grid.Row)" Value="0" />
-                        <Setter Target="RightGrid.(Grid.Column)" Value="1" />
+                        <Setter Target="Root.RowDefinitions[0].Height"
+                                Value="*" />
+                        <Setter Target="Root.RowDefinitions[1].Height"
+                                Value="*" />
+                        <Setter Target="Root.ColumnDefinitions[1].Width"
+                                Value="*" />
+                        <Setter Target="LeftGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="MiddleGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="RightGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="RightGrid.(Grid.Column)"
+                                Value="1" />
+                        <Setter Target="LeftGrid.(Grid.RowSpan)"
+                                Value="2" />
+                        <Setter Target="MiddleGrid.(Grid.Column)"
+                                Value="1" />
+                        <Setter Target="MiddleGrid.(Grid.Row)"
+                                Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <!--When window width is <720 effective pixels-->
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="LeftGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="MiddleGrid.(UIElement.Visibility)"
+                                Value="Visible" />
+                        <Setter Target="RightGrid.(UIElement.Visibility)"
+                                Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="0" />
+            <ColumnDefinition Width="0" />
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="LeftGrid">
-            <TextBlock x:Name="LeftText" 
-                       Text="Left content"
-                       FontSize="48"
+        <Grid x:Name="LeftGrid"
+              Margin="12">
+            <Rectangle x:Name="LeftGridBackgroundVisualWrapper" />
+            <TextBlock x:Name="LeftText"
+                       Text="red"
+                       FontSize="40"
                        FontWeight="Black"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       Foreground="White" />
         </Grid>
-        <Grid x:Name="RightGrid"
-              Grid.Row="1">
-            <TextBlock x:Name="RightText" 
-                       Text="Right content"
-                       FontSize="48"
+
+        <Grid x:Name="MiddleGrid"
+              Grid.Row="1"
+              Margin="12">
+            <Rectangle x:Name="MiddleGridBackgroundVisualWrapper" />
+            <TextBlock x:Name="MiddleText"
+                       Text="yellow"
+                       FontSize="40"
                        FontWeight="Black"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Center"
+                       Foreground="Black" />
+        </Grid>
+
+        <Grid x:Name="RightGrid"
+              Grid.Row="1"
+              Margin="12">
+            <Rectangle x:Name="RightGridBackgroundVisualWrapper" />
+            <TextBlock x:Name="RightText"
+                       Text="purple"
+                       FontSize="40"
+                       FontWeight="Black"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="White" />
         </Grid>
     </Grid>
 </Page>
